@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="PT-br">
+<head>
+    <title>Registro</title>
+</head>
+<body>
+    <h2>Registro</h2>
+    <form method="POST">
+        <label>Usuário:</label>
+        <input type="text" name="username" required><br>
+        <label>Senha:</label>
+        <input type="password" name="password" required><br>
+        <button type="submit">Registrar</button>
+    </form>
+    <a href="{{ url_for('login') }}">Voltar ao Login</a>
+</body>
+</html>

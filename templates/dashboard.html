@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="PT-br">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Bem-vindo, {{ session['user'] }}</h2>
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <h3>Criar Novo Registro</h3>
+    <form method="POST">
+        <label>Nome:</label>
+        <input type="text" name="name" required><br>
+        <label>Descrição:</label>
+        <input type="text" name="description"><br>
+        <button type="submit">Criar</button>
+    </form>
+
+    <h3>Registros</h3>
+    <ul>
+        {% for record in records %}
+            <li>{{ record[1] }} - {{ record[2] }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
