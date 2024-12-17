@@ -69,6 +69,35 @@ def dashboard():
     conn.close()
     return render_template("dashboard.html", records=records)
 
+# Rota para atualizar um registro
+@app.route("/update/<int:id>", methods=["GET", "POST"])
+def update(id):
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        # Captura os dados do formulário
+        name = request.form["name"]
+        description = request.form["description"]
+
+        # Atualiza o registro no banco de dados
+        cursor.execute("UPDATE records SET name = ?, description = ? WHERE id = ?", (name, description, id))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("dashboard"))
+
+    # Recupera o registro atual para pré-preencher o formulário
+    cursor.execute("SELECT * FROM records WHERE id = ?", (id,))
+    record = cursor.fetchone()
+    conn.close()
+
+    return render_template("update.html", record=record)
+
+
 # Rota de logout
 @app.route("/logout")
 def logout():

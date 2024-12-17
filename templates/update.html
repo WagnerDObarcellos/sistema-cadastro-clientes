@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="PT-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/style.css">
+    <title>Atualizar Registro</title>
+</head>
+<body>
+    <h1>Atualizar Registro</h1>
+    <form method="POST">
+        <label for="name">Nome:</label><br>
+        <input type="text" id="name" name="name" value="{{ record[1] }}" required><br><br>
+
+        <label for="description">Descrição:</label><br>
+        <textarea id="description" name="description" required>{{ record[2] }}</textarea><br><br>
+
+        <button type="submit">Atualizar</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}">Voltar ao Dashboard</a>
+</body>
+</html>
+
+

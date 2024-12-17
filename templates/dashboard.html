@@ -21,10 +21,24 @@
     </form>
 
     <h3>Registros</h3>
-    <ul>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
         {% for record in records %}
-            <li>{{ record[1] }} - {{ record[2] }}</li>
+        <tr>
+            <td>{{ record[0] }}</td>
+            <td>{{ record[1] }}</td>
+            <td>{{ record[2] }}</td>
+            <td>
+                <a href="{{ url_for('update', id=record[0]) }}">Editar</a>
+            </td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 </body>
 </html>
+
