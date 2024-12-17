@@ -19,7 +19,7 @@ def read_record():
     conn.close()
     return records
 
-def update_record():
+def update_record(record_id, name, description):
     # Atualiza um registro existente
     conn = create_connection()
     cursor = conn.cursor()
@@ -28,7 +28,7 @@ def update_record():
     print("Registro atualizado com sucesso")
     conn.close()
 
-def delete_record():
+def delete_record(record_id):
     # Deleta o registro
     conn = create_connection()
     cursor = conn.cursor()

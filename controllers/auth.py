@@ -1,5 +1,5 @@
 import sqlite3
-from database import create_connection
+from models.database import create_connection
 
 def register_user(username,password):
     # Registra novo usuario

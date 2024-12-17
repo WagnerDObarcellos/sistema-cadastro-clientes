@@ -1,20 +1,19 @@
-﻿from flask import Flask, render_template, request,redirect,url_for,session
-from database import create_connection, initialize_database
+﻿from flask import Flask, render_template, request, redirect, url_for, session
+from models.database import create_connection, initialize_database
 import os
 
 app = Flask(__name__)
-app.secret_key = 'secret_key' #chave para sessão
+app.secret_key = 'secret_key'  # chave para sessão
 
-#inicializa o banco de dados
+# Inicializa o banco de dados
 initialize_database()
 
-#Rota inicial do Login
+# Rota inicial do Login
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-
 
         conn = create_connection()
         cursor = conn.cursor()
@@ -23,14 +22,14 @@ def login():
         conn.close()
 
         if user:
-            session[user] = username
+            session["user"] = username  # Correção aqui
             return redirect(url_for("dashboard"))
         else:
             return "Login falhou! Verifique suas credenciais."
-    return render_template("loginhtml")
+    return render_template("login.html")  # Corrigido o nome do template
 
-#rota de registro
-@app.route("/register", method = ["GET","POST"])
+# Rota de registro
+@app.route("/register", methods=["GET", "POST"])  # Corrigido 'methods'
 def register():
     if request.method == "POST":
         username = request.form["username"]
@@ -43,16 +42,16 @@ def register():
             conn.commit()
             return redirect(url_for("login"))
         except:
-            return "Usuario já existe!"
+            return "Usuário já existe!"
         finally:
             conn.close()
     return render_template("register.html")
 
-#Dashboard #crud
-@app.route("/dashboard", methods = ["GET","POST"])
+# Dashboard (CRUD)
+@app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if "user" not in session:
-        return redirect("login.html")
+        return redirect(url_for("login"))  # Corrigido redirecionamento
     
     conn = create_connection()
     cursor = conn.cursor()
@@ -64,13 +63,13 @@ def dashboard():
         cursor.execute("INSERT INTO records (name, description) VALUES (?, ?)", (name, description))
         conn.commit()
     
-    #Leitura do registro
+    # Leitura do registro
     cursor.execute("SELECT * FROM records")
     records = cursor.fetchall()
     conn.close()
-    return render_template("dashboard.html", records = records)
+    return render_template("dashboard.html", records=records)
 
-
+# Rota de logout
 @app.route("/logout")
 def logout():
     session.pop("user", None)
@@ -78,3 +77,4 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
+

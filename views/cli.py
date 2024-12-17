@@ -1,5 +1,5 @@
-from auth import register_user, login_user
-from crud import create_record, read_records, update_record, delete_record
+from controllers.auth import register_user, login_user
+from models.crud import create_record, read_records, update_record, delete_record
 import os
 
 # Função para limpar a tela do terminal
